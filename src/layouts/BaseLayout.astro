@@ -1,0 +1,67 @@
+---
+import SeoHead from "../components/SeoHead.astro";
+import { SITE_LANGUAGE, SITE_TITLE } from "../lib/site";
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  pathname?: string;
+  image?: string;
+  keywords?: string[];
+  noindex?: boolean;
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const {
+  title,
+  description,
+  pathname = "/",
+  image,
+  keywords,
+  noindex = false,
+  structuredData
+} = Astro.props;
+
+const themeInitScript = `
+(() => {
+  const storageKey = "site-theme";
+  let theme = "dark";
+
+  try {
+    const stored = localStorage.getItem(storageKey);
+    if (stored === "light" || stored === "dark") {
+      theme = stored;
+    }
+  } catch {}
+
+  document.documentElement.dataset.theme = theme;
+})();
+`;
+---
+
+<!doctype html>
+<html lang={SITE_LANGUAGE}>
+  <head>
+    <SeoHead
+      title={title}
+      description={description}
+      pathname={pathname}
+      image={image}
+      keywords={keywords}
+      noindex={noindex}
+      structuredData={structuredData}
+    />
+    <script is:inline set:html={themeInitScript}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="site-shell">
+      <header class="site-header">
+        <a class="brand" href="/">{SITE_TITLE}</a>
+        <slot name="header-actions" />
+      </header>
+      <slot />
+    </div>
+  </body>
+</html>

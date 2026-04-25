@@ -1,0 +1,66 @@
+---
+import {
+  DEFAULT_OG_IMAGE,
+  SITE_KEYWORDS,
+  SITE_LANGUAGE,
+  SITE_LOCALE,
+  SITE_TITLE,
+  SITE_URL
+} from "../lib/site";
+
+interface Props {
+  title: string;
+  description: string;
+  pathname?: string;
+  image?: string;
+  keywords?: string[];
+  noindex?: boolean;
+  type?: "website" | "article";
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
+}
+
+const {
+  title,
+  description,
+  pathname = "/",
+  image = DEFAULT_OG_IMAGE,
+  keywords = [],
+  noindex = false,
+  type = "website",
+  structuredData
+} = Astro.props;
+
+const canonical = new URL(pathname, SITE_URL).toString();
+const ogImage = new URL(image, SITE_URL).toString();
+const metaKeywords = [...new Set([...SITE_KEYWORDS, ...keywords])];
+const robotsContent = noindex ? "noindex,nofollow" : "index,follow,max-image-preview:large";
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<meta name="author" content={SITE_TITLE} />
+<meta name="description" content={description} />
+<meta name="keywords" content={metaKeywords.join(", ")} />
+<meta name="robots" content={robotsContent} />
+<meta name="theme-color" content="#071019" media="(prefers-color-scheme: dark)" />
+<meta name="theme-color" content="#edf2f7" media="(prefers-color-scheme: light)" />
+<title>{title}</title>
+<link rel="canonical" href={canonical} />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="alternate" href={canonical} hreflang={SITE_LANGUAGE} />
+<meta property="og:locale" content={SITE_LOCALE} />
+<meta property="og:type" content={type} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta property="og:image:alt" content="fil-lost.org preview card" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+{structuredData && (
+  <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+)}

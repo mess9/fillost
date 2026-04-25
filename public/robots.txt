@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+
+Host: fil-lost.org
+Sitemap: https://fil-lost.org/sitemap-index.xml
+

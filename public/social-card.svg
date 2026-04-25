@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">fil-lost.org social preview</title>
+  <desc id="desc">OpenGraph preview card for fil-lost.org with Java, QA automation, backend testing and homelab.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071019" />
+      <stop offset="55%" stop-color="#0d1c2c" />
+      <stop offset="100%" stop-color="#10253c" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#73ddff" />
+      <stop offset="100%" stop-color="#84ffb4" />
+    </linearGradient>
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="rgba(115,221,255,0.16)" />
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)" />
+  <rect width="1200" height="630" fill="url(#grid)" opacity="0.7" />
+  <circle cx="1005" cy="130" r="180" fill="#49c9ff" opacity="0.14" />
+  <circle cx="1060" cy="520" r="120" fill="#84ffb4" opacity="0.1" />
+  <rect x="72" y="72" width="1056" height="486" rx="36" fill="#0a1521" fill-opacity="0.76" stroke="rgba(115,221,255,0.18)" />
+  <text x="120" y="168" fill="#73ddff" font-size="30" font-family="JetBrains Mono, Cascadia Mono, monospace" letter-spacing="6">FIL-LOST.ORG / PERSONAL NODE</text>
+  <text x="120" y="280" fill="#eaf3ff" font-size="110" font-weight="700" font-family="Segoe UI Variable Text, Segoe UI, sans-serif">fil-lost</text>
+  <text x="120" y="356" fill="#95a5b7" font-size="38" font-family="Segoe UI Variable Text, Segoe UI, sans-serif">Java / QA automation / backend testing / homelab</text>
+  <rect x="120" y="410" width="248" height="54" rx="27" fill="none" stroke="rgba(115,221,255,0.32)" />
+  <text x="154" y="445" fill="#eaf3ff" font-size="28" font-family="JetBrains Mono, Cascadia Mono, monospace">&gt; fil lost</text>
+  <rect x="392" y="410" width="228" height="54" rx="27" fill="none" stroke="rgba(132,255,180,0.28)" />
+  <text x="428" y="445" fill="#eaf3ff" font-size="28" font-family="JetBrains Mono, Cascadia Mono, monospace">&gt; Фил Лост</text>
+  <text x="120" y="520" fill="#95a5b7" font-size="26" font-family="Segoe UI Variable Text, Segoe UI, sans-serif">Static Astro site. Minimal JavaScript. Ready for blog growth.</text>
+</svg>
+

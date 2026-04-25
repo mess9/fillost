@@ -1,0 +1,40 @@
+<button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
+  <span class="theme-toggle__indicator" aria-hidden="true"></span>
+  <span data-theme-label>Light mode</span>
+</button>
+
+<script is:inline>
+  (() => {
+    const storageKey = "site-theme";
+    const button = document.querySelector("[data-theme-toggle]");
+    const label = button?.querySelector("[data-theme-label]");
+
+    if (!button || !label) {
+      return;
+    }
+
+    const sync = () => {
+      const current = document.documentElement.dataset.theme === "light" ? "light" : "dark";
+      const nextLabel = current === "dark" ? "Light mode" : "Dark mode";
+      button.setAttribute("aria-label", current === "dark" ? "Switch to light theme" : "Switch to dark theme");
+      button.setAttribute("aria-pressed", String(current === "light"));
+      label.textContent = nextLabel;
+    };
+
+    sync();
+
+    button.addEventListener("click", () => {
+      const next = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+      document.documentElement.dataset.theme = next;
+
+      try {
+        localStorage.setItem(storageKey, next);
+      } catch {
+        // Ignore storage failures and keep the in-memory theme.
+      }
+
+      sync();
+    });
+  })();
+</script>
+

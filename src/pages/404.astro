@@ -1,0 +1,25 @@
+---
+import ThemeToggle from "../components/ThemeToggle.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const description = "Страница не найдена на fil-lost.org.";
+---
+
+<BaseLayout title="404 | fil-lost" description={description} pathname="/404" noindex={true}>
+  <Fragment slot="header-actions">
+    <ThemeToggle />
+  </Fragment>
+
+  <main id="content" class="not-found">
+    <section class="panel not-found__card">
+      <p class="not-found__code">404 / route lost</p>
+      <h1 class="not-found__title">Страница не найдена</h1>
+      <p class="not-found__text">
+        Нужного маршрута здесь пока нет. Если это внутренний раздел, его можно будет добавить позже как отдельную
+        Astro-страницу или запись в контент-коллекции.
+      </p>
+      <a class="back-link" href="/">Вернуться на главную</a>
+    </section>
+  </main>
+</BaseLayout>
+

@@ -1,0 +1,161 @@
+---
+import { getEntry, render } from "astro:content";
+import ThemeToggle from "../components/ThemeToggle.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { SITE_TITLE, SITE_URL } from "../lib/site";
+
+const home = await getEntry("pages", "home");
+
+if (!home) {
+  throw new Error("Missing src/content/pages/home.mdx entry.");
+}
+
+const { Content } = await render(home);
+const { data } = home;
+
+const structuredData = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_TITLE,
+  alternateName: [SITE_TITLE, ...data.searchAliases],
+  url: SITE_URL,
+  description: data.seo.description,
+  knowsAbout: [...data.focusAreas.map((item) => item.title), ...data.labItems.map((item) => item.title)],
+  sameAs: data.contacts.filter((item) => item.href.startsWith("http")).map((item) => item.href),
+  email: data.contacts.find((item) => item.href.startsWith("mailto:"))?.value,
+  mainEntityOfPage: SITE_URL
+};
+---
+
+<BaseLayout
+  title={data.seo.title}
+  description={data.seo.description}
+  pathname="/"
+  image={data.seo.ogImage}
+  keywords={data.searchAliases}
+  structuredData={structuredData}
+>
+  <Fragment slot="header-actions">
+    <ThemeToggle />
+  </Fragment>
+
+  <main id="content">
+    <section class="hero">
+      <div class="panel hero-main">
+        <p class="eyebrow">fil-lost.org / personal node</p>
+        <h1 class="hero-title">{data.title}</h1>
+        <p class="hero-subtitle">{data.identity}</p>
+
+        <div class="hero-copy">
+          {data.intro.map((paragraph) => (
+            <p>{paragraph}</p>
+          ))}
+        </div>
+
+        <div class="pill-row" aria-label="Search aliases">
+          <span class="pill">{data.title}</span>
+          {data.searchAliases.map((alias) => (
+            <span class="pill">{alias}</span>
+          ))}
+        </div>
+      </div>
+
+      <aside class="panel hero-aside" aria-label="Quick profile">
+        <h2 class="aside-heading">Stack snapshot</h2>
+        <div class="metric-list">
+          <div class="metric">
+            <strong>Core</strong>
+            <span>Java, QA automation, backend testing, test infrastructure</span>
+          </div>
+          <div class="metric">
+            <strong>Ops</strong>
+            <span>Homelab, домашний сервер, self-hosted сервисы, наблюдаемость</span>
+          </div>
+          <div class="metric">
+            <strong>Site mode</strong>
+            <span>Astro + MDX + static deploy on nginx with minimal JavaScript</span>
+          </div>
+        </div>
+
+        <div class="status-grid">
+          <h2 class="aside-heading">Current markers</h2>
+          <div class="pill-row">
+            {data.statusChips.map((chip) => (
+              <span class="pill">{chip}</span>
+            ))}
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel section" aria-labelledby="who-am-i">
+      <div class="section-header">
+        <h2 class="section-heading" id="who-am-i">Кто я</h2>
+        <span class="section-note">Короткая визитка без лишнего шума</span>
+      </div>
+      <div class="card-grid">
+        {data.focusAreas.map((area) => (
+          <article class="info-card">
+            <h3>{area.title}</h3>
+            <p>{area.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel section" aria-labelledby="homelab">
+      <div class="section-header">
+        <h2 class="section-heading" id="homelab">Homelab</h2>
+        <span class="section-note">Домашняя инфраструктура и техно-эстетика</span>
+      </div>
+      <div class="card-grid">
+        {data.labItems.map((item) => (
+          <article class="info-card">
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="panel section" aria-labelledby="notes">
+      <div class="section-header">
+        <h2 class="section-heading" id="notes">Что дальше</h2>
+        <span class="section-note">Контент можно спокойно расширять через MDX</span>
+      </div>
+      <article class="prose">
+        <Content />
+      </article>
+    </section>
+
+    <section class="panel section" aria-labelledby="contacts">
+      <div class="section-header">
+        <h2 class="section-heading" id="contacts">Контакты</h2>
+        <span class="section-note">GitHub, Telegram, email и будущие точки входа</span>
+      </div>
+      <div class="contact-grid">
+        {data.contacts.map((contact) => {
+          const external = contact.href.startsWith("http");
+
+          return (
+            <a
+              class="contact-card"
+              href={contact.href}
+              target={external ? "_blank" : undefined}
+              rel={external ? "me noopener noreferrer" : undefined}
+            >
+              <span class="contact-label">{contact.label}</span>
+              <span class="contact-value">{contact.value}</span>
+              {contact.note && <span class="contact-note">{contact.note}</span>}
+            </a>
+          );
+        })}
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>fil-lost.org built as a static Astro site with room for a blog, extra pages and future integrations.</p>
+  </footer>
+</BaseLayout>
+

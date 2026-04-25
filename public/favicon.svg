@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" role="img" aria-labelledby="title desc">
+  <title id="title">fil-lost favicon</title>
+  <desc id="desc">Dark square with terminal-inspired FL monogram.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#071019" />
+      <stop offset="100%" stop-color="#10253c" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#73ddff" />
+      <stop offset="100%" stop-color="#84ffb4" />
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" rx="28" fill="url(#bg)" />
+  <path d="M28 36h72v8H28zm0 24h36v8H28zm0 24h52v8H28z" fill="#1d466d" opacity=".7" />
+  <path d="M36 34h14v56H36zm0 0h38v14H36z" fill="url(#accent)" />
+  <path d="M86 34 58 62l28 28" fill="none" stroke="url(#accent)" stroke-linecap="round" stroke-linejoin="round" stroke-width="12" />
+</svg>
+
