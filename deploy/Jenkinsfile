@@ -1,0 +1,54 @@
+pipeline {
+    agent any
+
+    environment {
+        IMAGE_NAME = "gitea.fil-lost.org/fil/my-app"
+        IMAGE_TAG = "${env.BUILD_NUMBER}"
+        COMPOSE_DIR = "/home/mess9/services/docker/fillost"
+    }
+
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+
+        stage('Build image') {
+            steps {
+                sh """
+                    docker build -t $IMAGE_NAME:$IMAGE_TAG .
+                    docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
+                """
+            }
+        }
+
+        stage('Push image') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'gitea-registry',
+                    usernameVariable: 'REGISTRY_USER',
+                    passwordVariable: 'REGISTRY_PASSWORD'
+                )]) {
+                    sh """
+                        echo "$REGISTRY_PASSWORD" | docker login gitea.fil-lost.org -u "$REGISTRY_USER" --password-stdin
+                        docker push $IMAGE_NAME:$IMAGE_TAG
+                        docker push $IMAGE_NAME:latest
+                    """
+                }
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                sh """
+                    mkdir -p /home/mess9/services/docker/fillost
+                    cp deploy/compose.yml /home/mess9/services/docker/fillost/compose.yml
+                    cd /home/mess9/services/docker/fillost
+                    docker compose pull
+                    docker compose up -d
+                """
+            }
+        }
+    }
+}

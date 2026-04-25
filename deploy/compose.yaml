@@ -1,0 +1,16 @@
+services:
+  my-app:
+    image: gitea.fil-lost.org/mess9/fillost:latest
+    container_name: my-app
+    restart: unless-stopped
+    networks:
+      - proxy
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.my-app.rule=Host(`my-app.fil-lost.org`)
+      - traefik.http.routers.my-app.entrypoints=web
+      - traefik.http.services.my-app.loadbalancer.server.port=8080
+
+networks:
+  proxy:
+    external: true
