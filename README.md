@@ -1,6 +1,6 @@
 # fil-lost.org
 
-Персональный статический сайт-визитка на Astro с контентом через MDX и production-образом на nginx.
+сайт-визитка
 
 ## Стек
 
@@ -16,7 +16,7 @@
 - SEO и общие константы: [src/lib/site.ts](src/lib/site.ts)
 - Глобальные стили: [src/styles/global.css](src/styles/global.css)
 
-Коллекция `src/content/blog/` уже подготовлена под будущий блог.
+Коллекция `src/content/blog/` подготовлена под будущий блог.
 
 ## Команды
 
