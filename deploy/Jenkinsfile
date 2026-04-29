@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "gitea.fil-lost.org/fil/my-app"
+        IMAGE_NAME = "gitea.fil-lost.org/mess9/fillost"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         COMPOSE_DIR = "/home/mess9/services/docker/fillost"
     }
@@ -17,8 +17,11 @@ pipeline {
         stage('Build image') {
             steps {
                 sh """
-                    docker build -t $IMAGE_NAME:$IMAGE_TAG .
-                    docker tag $IMAGE_NAME:$IMAGE_TAG $IMAGE_NAME:latest
+                    docker build \
+                      -f deploy/docker/Dockerfile \
+                      -t $IMAGE_NAME:$IMAGE_TAG \
+                      -t $IMAGE_NAME:latest \
+                      .
                 """
             }
         }
@@ -42,9 +45,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh """
-                    mkdir -p /home/mess9/services/docker/fillost
-                    cp deploy/compose.yml /home/mess9/services/docker/fillost/compose.yml
-                    cd /home/mess9/services/docker/fillost
+                    mkdir -p $COMPOSE_DIR
+                    cp deploy/docker/compose.yaml $COMPOSE_DIR/compose.yaml
+
+                    cd $COMPOSE_DIR
                     docker compose pull
                     docker compose up -d
                 """
