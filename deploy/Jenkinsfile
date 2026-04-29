@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = "192.168.11.222:3001/mess9/fillost"
+        IMAGE_NAME = "localhost:3001/mess9/fillost"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
         COMPOSE_DIR = "/home/mess9/services/docker/fillost"
     }
