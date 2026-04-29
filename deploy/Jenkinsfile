@@ -28,18 +28,11 @@ pipeline {
 
         stage('Push image') {
             steps {
-                withCredentials([usernamePassword(
-                    credentialsId: 'gitea-registry',
-                    usernameVariable: 'REGISTRY_USER',
-                    passwordVariable: 'REGISTRY_PASSWORD'
-                )]) {
                     sh '''
-                        echo "$REGISTRY_PASSWORD" | docker login 192.168.11.222:3001 -u "$REGISTRY_USER" --password-stdin
                         docker push $IMAGE_NAME:$IMAGE_TAG
                         docker push $IMAGE_NAME:latest
                     '''
                 }
-            }
         }
 
         stage('Deploy') {
