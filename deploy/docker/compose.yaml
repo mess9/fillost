@@ -1,6 +1,6 @@
 services:
   my-app:
-    image: gitea.fil-lost.org/mess9/fillost:latest
+    image: 192.168.11.222:3001/mess9/fillost:latest
     container_name: my-app
     restart: unless-stopped
     networks:
