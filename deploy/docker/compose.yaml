@@ -1,15 +1,15 @@
 services:
-  my-app:
+  fillost:
     image: localhost:5000/mess9/fillost:latest
-    container_name: my-app
+    container_name: fillost
     restart: unless-stopped
     networks:
       - proxy
     labels:
       - traefik.enable=true
-      - traefik.http.routers.my-app.rule=Host(`fil-lost.org`)
-      - traefik.http.routers.my-app.entrypoints=web
-      - traefik.http.services.my-app.loadbalancer.server.port=80
+      - traefik.http.routers.fillost.rule=Host(`fil-lost.org`)
+      - traefik.http.routers.fillost.entrypoints=web
+      - traefik.http.services.fillost.loadbalancer.server.port=80
 
 networks:
   proxy:
