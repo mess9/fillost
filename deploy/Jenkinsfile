@@ -50,5 +50,14 @@ pipeline {
                 """
             }
         }
+
+        stage('Smoke test') {
+            steps {
+                sh '''
+                    sleep 5
+                    curl -f http://fil-lost.org || exit 1
+                '''
+            }
+        }
     }
 }
