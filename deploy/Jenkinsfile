@@ -36,6 +36,9 @@ pipeline {
         }
 
         stage('Deploy') {
+            when {
+                branch 'master'
+            }
             steps {
                 sh """
                     mkdir -p $COMPOSE_DIR
