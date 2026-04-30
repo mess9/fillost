@@ -1,6 +1,6 @@
 services:
   fillost:
-    image: localhost:5000/mess9/fillost:latest
+    image: localhost:5000/mess9/fillost:${IMAGE_TAG}
     container_name: fillost
     restart: unless-stopped
     networks:

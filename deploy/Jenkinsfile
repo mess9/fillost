@@ -45,8 +45,10 @@ pipeline {
                     cp deploy/docker/compose.yaml $COMPOSE_DIR/compose.yaml
 
                     cd $COMPOSE_DIR
+                    echo "IMAGE_TAG=$IMAGE_TAG" > .env
+
                     docker compose pull
-                    docker compose up -d
+                    docker compose up -d --force-recreate
                 """
             }
         }
@@ -55,7 +57,7 @@ pipeline {
             steps {
                 sh '''
                     sleep 5
-                    curl -f http://fil-lost.org || exit 1
+                    curl -f -H "Host: fil-lost.org" http://127.0.0.1 || exit 1
                 '''
             }
         }
