@@ -8,8 +8,15 @@ const pages = defineCollection({
     identity: z.string(),
     summary: z.string(),
     intro: z.array(z.string()).default([]),
-    statusChips: z.array(z.string()).default([]),
-    focusAreas: z
+    quickFacts: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string()
+        })
+      )
+      .default([]),
+    workCards: z
       .array(
         z.object({
           title: z.string(),
@@ -17,7 +24,7 @@ const pages = defineCollection({
         })
       )
       .default([]),
-    labItems: z
+    lifeCards: z
       .array(
         z.object({
           title: z.string(),
@@ -60,4 +67,3 @@ export const collections = {
   pages,
   blog
 };
-

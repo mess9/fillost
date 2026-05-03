@@ -1,6 +1,6 @@
 <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false">
   <span class="theme-toggle__indicator" aria-hidden="true"></span>
-  <span data-theme-label>Light mode</span>
+  <span data-theme-label>светлая тема</span>
 </button>
 
 <script is:inline>
@@ -15,8 +15,8 @@
 
     const sync = () => {
       const current = document.documentElement.dataset.theme === "light" ? "light" : "dark";
-      const nextLabel = current === "dark" ? "Light mode" : "Dark mode";
-      button.setAttribute("aria-label", current === "dark" ? "Switch to light theme" : "Switch to dark theme");
+      const nextLabel = current === "dark" ? "светлая тема" : "тёмная тема";
+      button.setAttribute("aria-label", current === "dark" ? "переключить на светлую тему" : "переключить на тёмную тему");
       button.setAttribute("aria-pressed", String(current === "light"));
       label.textContent = nextLabel;
     };
@@ -37,4 +37,3 @@
     });
   })();
 </script>
-

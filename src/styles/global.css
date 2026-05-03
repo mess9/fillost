@@ -130,8 +130,7 @@ select {
   gap: 0.85rem;
   font-family: "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   font-size: 0.95rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--muted);
 }
 
@@ -208,23 +207,22 @@ select {
   margin: 0 0 1rem;
   font-family: "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
   font-size: 0.78rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--accent);
 }
 
 .hero-title {
   margin: 0;
-  font-size: clamp(2.5rem, 7vw, 5rem);
-  line-height: 0.94;
-  letter-spacing: -0.06em;
+  font-size: 4.6rem;
+  line-height: 0.96;
+  letter-spacing: 0;
 }
 
 .hero-subtitle {
   margin: 1.1rem 0 0;
   max-width: 42rem;
   color: var(--muted);
-  font-size: clamp(1rem, 2.4vw, 1.18rem);
+  font-size: 1.08rem;
 }
 
 .hero-copy {
@@ -278,8 +276,7 @@ select {
 .section-heading {
   margin: 0;
   font-size: 0.92rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--muted);
   font-family: "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
 }
@@ -315,6 +312,7 @@ select {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-bottom: 1rem;
 }
@@ -370,8 +368,7 @@ select {
 
 .contact-label {
   font-family: "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--muted);
   font-size: 0.72rem;
 }
@@ -435,8 +432,7 @@ select {
 .not-found__code {
   margin: 0;
   font-family: "Cascadia Mono", "JetBrains Mono", "Fira Code", ui-monospace, monospace;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
+  letter-spacing: 0.08em;
   color: var(--accent);
 }
 
@@ -467,6 +463,10 @@ select {
     width: min(100% - 1rem, 1120px);
   }
 
+  .hero-title {
+    font-size: 3.4rem;
+  }
+
   .hero {
     grid-template-columns: 1fr;
   }
@@ -485,12 +485,16 @@ select {
     flex-direction: column;
   }
 
+  .hero-title {
+    font-size: 2.6rem;
+  }
+
   .pill-row {
     grid-template-columns: 1fr;
   }
 
   .brand {
-    letter-spacing: 0.12em;
+    letter-spacing: 0.06em;
   }
 }
 
@@ -507,4 +511,3 @@ select {
     transition-duration: 0.01ms !important;
   }
 }
-

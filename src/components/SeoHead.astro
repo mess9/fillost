@@ -1,6 +1,7 @@
 ---
 import {
   DEFAULT_OG_IMAGE,
+  SITE_BRAND,
   SITE_KEYWORDS,
   SITE_LANGUAGE,
   SITE_LOCALE,
@@ -51,7 +52,7 @@ const robotsContent = noindex ? "noindex,nofollow" : "index,follow,max-image-pre
 <link rel="alternate" href={canonical} hreflang={SITE_LANGUAGE} />
 <meta property="og:locale" content={SITE_LOCALE} />
 <meta property="og:type" content={type} />
-<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:site_name" content={SITE_BRAND} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical} />
