@@ -1,0 +1,52 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => !data.draft);
+
+  return posts.map((entry) => ({
+    params: { slug: entry.id },
+    props: { entry }
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<BaseLayout
+  title={`${entry.data.title} | fil-lost.org`}
+  description={entry.data.description}
+  pathname={`/blog/${entry.id}`}
+>
+  <main id="content">
+    <section class="hero">
+      <div class="panel hero-main">
+        <p class="eyebrow">{`fil-lost.org/blog/${entry.id}`}</p>
+        <h1 class="hero-title">{entry.data.title}</h1>
+        <p class="hero-subtitle">{entry.data.description}</p>
+      </div>
+
+      <aside class="panel hero-aside" aria-label="post meta">
+        <h2 class="aside-heading">meta</h2>
+        <div class="metric-list">
+          <div class="metric">
+            <strong>Опубликовано</strong>
+            <span>{entry.data.pubDate.toLocaleDateString("ru-RU")}</span>
+          </div>
+          {entry.data.tags.length > 0 && (
+            <div class="metric">
+              <strong>Теги</strong>
+              <span>{entry.data.tags.join(", ")}</span>
+            </div>
+          )}
+        </div>
+      </aside>
+    </section>
+
+    <article class="panel section prose">
+      <Content />
+    </article>
+  </main>
+</BaseLayout>

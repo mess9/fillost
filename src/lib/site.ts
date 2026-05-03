@@ -1,6 +1,7 @@
 export const SITE_URL = "https://fil-lost.org";
 export const SITE_TITLE = "fil lost";
 export const SITE_BRAND = "fil-lost.org";
+export const SITE_FOUNDED_YEAR = 2026;
 export const SITE_LOCALE = "ru_RU";
 export const SITE_LANGUAGE = "ru";
 export const DEFAULT_OG_IMAGE = "/social-card.svg";

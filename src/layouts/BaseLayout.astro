@@ -1,6 +1,6 @@
 ---
 import SeoHead from "../components/SeoHead.astro";
-import { SITE_BRAND, SITE_LANGUAGE } from "../lib/site";
+import { SITE_BRAND, SITE_FOUNDED_YEAR, SITE_LANGUAGE } from "../lib/site";
 import "../styles/global.css";
 
 interface Props {
@@ -22,6 +22,18 @@ const {
   noindex = false,
   structuredData
 } = Astro.props;
+const isBlogPath = pathname === "/blog" || pathname.startsWith("/blog/");
+const footerDate = new Date();
+const footerDateLabel = new Intl.DateTimeFormat("ru-RU", {
+  day: "2-digit",
+  month: "2-digit",
+  year: "numeric"
+}).format(footerDate);
+const footerYear = footerDate.getFullYear();
+const footerYearsLabel =
+  footerYear === SITE_FOUNDED_YEAR
+    ? `${SITE_FOUNDED_YEAR}`
+    : `${SITE_FOUNDED_YEAR}-${footerYear}`;
 
 const themeInitScript = `
 (() => {
@@ -58,10 +70,21 @@ const themeInitScript = `
     <a class="skip-link" href="#content">Skip to content</a>
     <div class="site-shell">
       <header class="site-header">
-        <a class="brand" href="/">{SITE_BRAND}</a>
+        <nav class="header-nav" aria-label="Primary">
+          <a class="brand" href="/">{SITE_BRAND}</a>
+          <a class:list={["header-link", isBlogPath && "header-link--active"]} href="/blog">
+            <span class="header-link__status" aria-hidden="true"></span>
+            <span>blog</span>
+          </a>
+        </nav>
         <slot name="header-actions" />
       </header>
       <slot />
+      <footer class="layout-footer">
+        <span>{SITE_BRAND}</span>
+        <span>основан: {footerYearsLabel}</span>
+        <time datetime={footerDate.toISOString()}>{footerDateLabel}</time>
+      </footer>
     </div>
   </body>
 </html>

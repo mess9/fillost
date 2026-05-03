@@ -1,0 +1,69 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+
+const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
+  (left, right) => right.data.pubDate.getTime() - left.data.pubDate.getTime()
+);
+
+const dateFormatter = new Intl.DateTimeFormat("ru-RU", {
+  day: "2-digit",
+  month: "long",
+  year: "numeric"
+});
+
+const description = "Заметки, логи и тексты для fil-lost.org.";
+---
+
+<BaseLayout
+  title="Блог | fil-lost.org"
+  description={description}
+  pathname="/blog"
+>
+  <main id="content">
+    <section class="hero hero--blog">
+      <div class="panel hero-main hero-main--blog">
+        <p class="eyebrow">fil-lost.org/blog</p>
+        <h4 class="hero-title hero-title--blog">блог</h4>
+        <p class="hero-subtitle">тут будут(или нет) записи про работу, железо, self-hosted штуки и всё остальное</p>
+      </div>
+
+      <aside class="panel hero-aside hero-aside--blog" aria-label="blog summary">
+        <h2 class="aside-heading">status</h2>
+        <div class="metric-list">
+          <div class="metric">
+            <strong>Опубликовано</strong>
+            <span>{posts.length}</span>
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="panel section" aria-labelledby="blog-posts">
+      <div class="section-header">
+        <h2 class="section-heading" id="blog-posts">посты</h2>
+        <span class="section-note">/blog</span>
+      </div>
+
+      {posts.length > 0 ? (
+        <div class="blog-list">
+          {posts.map((post) => (
+            <a class="blog-card" href={`/blog/${post.id}`}>
+              <div class="blog-card__meta">
+                <span>{dateFormatter.format(post.data.pubDate)}</span>
+                {post.data.tags.length > 0 && <span>{post.data.tags.join(" / ")}</span>}
+              </div>
+              <h3>{post.data.title}</h3>
+              <p>{post.data.description}</p>
+            </a>
+          ))}
+        </div>
+      ) : (
+        <div class="empty-state">
+          <p>Пока без опубликованных постов.</p>
+          <p>Маршрут уже на месте, контент можно добавлять в `src/content/blog/`.</p>
+        </div>
+      )}
+    </section>
+  </main>
+</BaseLayout>
