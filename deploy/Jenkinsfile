@@ -78,4 +78,28 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            sh '''
+                curl -X POST "https://n8n.fil-lost.org/webhook-test/jenkins-deploy" \
+                  -H "Content-Type: application/json" \
+                      -d "{
+                        \\"project\\": \\"fillost\\",
+                        \\"branch\\": \\"$BRANCH_NAME\\",
+                        \\"imageTag\\": \\"$IMAGE_TAG\\",
+                        \\"status\\": \\"deployed\\",
+                        \\"url\\": \\"https://fil-lost.org\\"
+                      }"
+            '''
+        }
+
+        failure {
+            sh '''
+                curl -X POST "https://n8n.fil-lost.org/webhook-test/jenkins-deploy" \
+                  -H "Content-Type: application/json" \
+                  -d '{"project":"fillost","status":"failure"}'
+            '''
+        }
+    }
 }
