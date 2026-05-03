@@ -53,8 +53,31 @@ pipeline {
         stage('Smoke test') {
             steps {
                 sh '''
-                    sleep 5
-                    curl -f -H "Host: fil-lost.org" http://traefik || exit 1
+                    for i in $(seq 1 30); do
+                      status=$(docker inspect -f '{{.State.Health.Status}}' fillost 2>/dev/null || echo "missing")
+                      echo "fillost health: $status"
+
+                      if [ "$status" = "healthy" ]; then
+                        break
+                      fi
+
+                      sleep 2
+                    done
+
+                    for i in $(seq 1 30); do
+                      echo "Traefik smoke attempt $i..."
+
+                      if curl -fsS -H "Host: fil-lost.org" http://traefik > /dev/null; then
+                        echo "Smoke test passed"
+                        exit 0
+                      fi
+
+                      sleep 2
+                    done
+
+                    echo "Smoke test failed"
+                    curl -v -H "Host: fil-lost.org" http://traefik || true
+                    exit 1
                 '''
             }
         }
