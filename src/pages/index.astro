@@ -1,5 +1,5 @@
 ---
-import { getEntry, render } from "astro:content";
+import { getEntry } from "astro:content";
 import ThemeToggle from "../components/ThemeToggle.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { SITE_URL } from "../lib/site";
@@ -10,9 +10,10 @@ if (!home) {
   throw new Error("Missing src/content/pages/home.mdx entry.");
 }
 
-const { Content } = await render(home);
 const { data } = home;
-const sameAsLinks = data.contacts.filter((item) => item.href.startsWith("http")).map((item) => item.href);
+const sameAsLinks = [...data.contacts, ...data.channels]
+  .filter((item) => item.href.startsWith("http"))
+  .map((item) => item.href);
 const visibleAliases = [...new Set([data.title, ...data.searchAliases])];
 const alternateNames = [...new Set([data.title, ...data.searchAliases, "Fil Lost", "Фил Лост"])];
 
@@ -58,13 +59,13 @@ const structuredData = {
   <main id="content">
     <section class="hero">
       <div class="panel hero-main">
-        <p class="eyebrow">fil-lost.org / personal page</p>
+        <p class="eyebrow">fil-lost.org/</p>
         <h1 class="hero-title">{data.title}</h1>
-        <p class="hero-subtitle">{data.identity}</p>
+        <p class="hero-subtitle preserve-lines">{data.identity}</p>
 
         <div class="hero-copy">
           {data.intro.map((paragraph) => (
-            <p>{paragraph}</p>
+            <p class="preserve-lines">{paragraph}</p>
           ))}
         </div>
 
@@ -76,62 +77,54 @@ const structuredData = {
       </div>
 
       <aside class="panel hero-aside" aria-label="quick profile">
-        <h2 class="aside-heading">коротко о себе</h2>
+        <h2 class="aside-heading">...</h2>
         <div class="metric-list">
           {data.quickFacts.map((fact) => (
             <div class="metric">
               <strong>{fact.label}</strong>
-              <span>{fact.value}</span>
+              {fact.href ? (
+                <a
+                  class="metric-link preserve-lines"
+                  href={fact.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {fact.value}
+                </a>
+              ) : (
+                <span class="preserve-lines">{fact.value}</span>
+              )}
             </div>
           ))}
         </div>
       </aside>
     </section>
 
-    <section class="panel section" aria-labelledby="work">
+    <section class="panel section" aria-labelledby="channels">
       <div class="section-header">
-        <h2 class="section-heading" id="work">что у меня по работе</h2>
-        <span class="section-note">коротко, без корпоративного тона</span>
+        <h2 class="section-heading" id="channels">каналы</h2>
+        <span class="section-note">ещё немного меня</span>
       </div>
-      <div class="card-grid">
-        {data.workCards.map((area) => (
-          <article class="info-card">
-            <h3>{area.title}</h3>
-            <p>{area.text}</p>
-          </article>
+      <div class="contact-grid">
+        {data.channels.map((channel) => (
+          <a
+            class="contact-card"
+            href={channel.href}
+            target="_blank"
+            rel="me noopener noreferrer"
+          >
+            <span class="contact-label">{channel.label}</span>
+            <span class="contact-value">{channel.value}</span>
+            {channel.note && <span class="contact-note">{channel.note}</span>}
+          </a>
         ))}
       </div>
-    </section>
-
-    <section class="panel section" aria-labelledby="life">
-      <div class="section-header">
-        <h2 class="section-heading" id="life">что есть кроме работы</h2>
-        <span class="section-note">чтобы страница была про человека, а не только про стек</span>
-      </div>
-      <div class="card-grid">
-        {data.lifeCards.map((item) => (
-          <article class="info-card">
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section class="panel section" aria-labelledby="notes">
-      <div class="section-header">
-        <h2 class="section-heading" id="notes">что дальше</h2>
-        <span class="section-note">эта штука будет понемногу жить и дополняться</span>
-      </div>
-      <article class="prose">
-        <Content />
-      </article>
     </section>
 
     <section class="panel section" aria-labelledby="contacts">
       <div class="section-header">
         <h2 class="section-heading" id="contacts">контакты</h2>
-        <span class="section-note">linkedin, github, telegram. почту добавлю позже.</span>
+        <span class="section-note">...</span>
       </div>
       <div class="contact-grid">
         {data.contacts.map((contact) => {
@@ -155,6 +148,6 @@ const structuredData = {
   </main>
 
   <footer class="site-footer">
-    <p>fil-lost.org, личная страница, которая будет меняться вместе с жизнью.</p>
+    <p>личная страница, которая будет меняться вместе с жизнью.</p>
   </footer>
 </BaseLayout>

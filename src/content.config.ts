@@ -12,7 +12,8 @@ const pages = defineCollection({
       .array(
         z.object({
           label: z.string(),
-          value: z.string()
+          value: z.string(),
+          href: z.string().optional()
         })
       )
       .default([]),
@@ -33,6 +34,16 @@ const pages = defineCollection({
       )
       .default([]),
     contacts: z
+      .array(
+        z.object({
+          label: z.string(),
+          value: z.string(),
+          href: z.string(),
+          note: z.string().optional()
+        })
+      )
+      .default([]),
+    channels: z
       .array(
         z.object({
           label: z.string(),

@@ -232,6 +232,10 @@ select {
   color: var(--muted);
 }
 
+.preserve-lines {
+  white-space: pre-line;
+}
+
 .pill-row,
 .status-grid,
 .card-grid,
@@ -301,6 +305,15 @@ select {
 
 .metric span {
   color: var(--muted);
+}
+
+.metric-link {
+  color: var(--muted);
+  transition: color 160ms ease;
+}
+
+.metric-link:hover {
+  color: var(--text);
 }
 
 .section {
