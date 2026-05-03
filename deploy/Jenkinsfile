@@ -86,7 +86,7 @@ pipeline {
     post {
         success {
             sh '''
-                curl -X POST "https://n8n.fil-lost.org/webhook/jenkins-deploy" \
+                curl -X POST "https://n8n.fil-lost.org/webhook-test/jenkins-deploy" \
                   -H "Content-Type: application/json" \
                       -d "{
                         \\"project\\": \\"fillost\\",
@@ -100,7 +100,7 @@ pipeline {
 
         failure {
             sh '''
-                curl -X POST "https://n8n.fil-lost.org/webhook/jenkins-deploy" \
+                curl -X POST "https://n8n.fil-lost.org/webhook-test/jenkins-deploy" \
                   -H "Content-Type: application/json" \
                   -d '{"project":"fillost","status":"failure"}'
             '''
