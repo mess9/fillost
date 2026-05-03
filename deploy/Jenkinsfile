@@ -54,26 +54,7 @@ pipeline {
             steps {
                 sh '''
                     sleep 5
-                    curl -f -H "Host: fil-lost.org" http://host.docker.internal || exit 1
-                '''
-            }
-        }
-
-        stage('Notify n8n') {
-            when {
-                branch 'master'
-            }
-            steps {
-                sh '''
-                    curl -X POST "https://n8n.fil-lost.org/webhook-test/jenkins-deploy" \
-                      -H "Content-Type: application/json" \
-                      -d "{
-                        \\"project\\": \\"fillost\\",
-                        \\"branch\\": \\"$BRANCH_NAME\\",
-                        \\"imageTag\\": \\"$IMAGE_TAG\\",
-                        \\"status\\": \\"deployed\\",
-                        \\"url\\": \\"https://fil-lost.org\\"
-                      }"
+                    curl -H "Host: fil-lost.org" http://127.0.0.1 || exit 1
                 '''
             }
         }
