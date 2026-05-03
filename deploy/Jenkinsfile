@@ -54,7 +54,7 @@ pipeline {
             steps {
                 sh '''
                     sleep 5
-                    curl -H "Host: fil-lost.org" http://127.0.0.1 || exit 1
+                    curl -f -H "Host: fil-lost.org" http://traefik || exit 1
                 '''
             }
         }
