@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    options {
+        ansiColor('xterm')
+    }
+
     environment {
         IMAGE_NAME = "localhost:5000/mess9/fillost"
         IMAGE_TAG = "${env.BUILD_NUMBER}"
