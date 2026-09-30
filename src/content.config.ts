@@ -38,7 +38,7 @@ const pages = defineCollection({
         z.object({
           label: z.string(),
           value: z.string(),
-          href: z.string(),
+          href: z.string().optional(),
           note: z.string().optional()
         })
       )

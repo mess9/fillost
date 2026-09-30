@@ -444,7 +444,7 @@ select {
     background 160ms ease;
 }
 
-.contact-card:hover {
+a.contact-card:hover {
   transform: translateY(-2px);
   border-color: rgba(115, 221, 255, 0.35);
 }
@@ -458,6 +458,11 @@ select {
 
 .contact-value {
   font-size: 1.03rem;
+}
+
+.contact-value--copy {
+  user-select: all;
+  cursor: text;
 }
 
 .contact-note {

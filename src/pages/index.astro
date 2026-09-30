@@ -12,8 +12,8 @@ if (!home) {
 
 const { data } = home;
 const sameAsLinks = [...data.contacts, ...data.channels]
-  .filter((item) => item.href.startsWith("http"))
-  .map((item) => item.href);
+  .map((item) => item.href)
+  .filter((href): href is string => Boolean(href?.startsWith("http")));
 const visibleAliases = [...new Set([data.title, ...data.searchAliases])];
 const alternateNames = [...new Set([data.title, ...data.searchAliases, "Fil Lost", "Фил Лост"])];
 
@@ -128,6 +128,16 @@ const structuredData = {
       </div>
       <div class="contact-grid">
         {data.contacts.map((contact) => {
+          if (!contact.href) {
+            return (
+              <div class="contact-card contact-card--static">
+                <span class="contact-label">{contact.label}</span>
+                <span class="contact-value contact-value--copy">{contact.value}</span>
+                {contact.note && <span class="contact-note">{contact.note}</span>}
+              </div>
+            );
+          }
+
           const external = contact.href.startsWith("http");
 
           return (
